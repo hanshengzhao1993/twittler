@@ -3,23 +3,43 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+      <link rel="stylesheet" type="text/css" href="twittler.css">
+      <script src="moment.js"></script>
+      <title>Twittler Repo</title>
   </head>
   <body>
+    <div class="update">New Tweets</div>
+
     <script>
+
+
 
       $(document).ready(function(){
         var $body = $('body');
-        $body.html('');
+       
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
+      var makeTweet = function(num){
+         var index = num;
 
+         for(var i = 0; i < index ;i++){
+            var tweet = streams.home[i];
+            var $tweet = $('<div></div>');
+            var timestamp = moment().fromNow();
+            
+            $tweet.append( "<strong class='" + tweet.user + "'>@" + tweet.user + '</strong>: ' + '<p>' + tweet.message + '</p>');
+            $tweet.append(timestamp);
+            $tweet.appendTo($body);
+            $('.update').after($tweet);
+         };
+      };
+      makeTweet(10);
+
+     
+          $('.update').on('click',function(){
+            makeTweet(Math.ceil(Math.random()* 10));
+          });
+
+          
       });
 
     </script>
